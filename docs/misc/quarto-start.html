@@ -193,8 +193,47 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="img/quartorender.png" class="img-fluid"></p>
 <p>Woohoo! It looks quite neat.</p>
 <p><img src="img/quartoafterrender.png" class="img-fluid"></p>
+<p>Now it is time to publish.</p>
+<p>Trigger…. <code>quarto publish</code>.</p>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Danger
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you get into any issue like below:</p>
+<pre><code>error: RPC failed; HTTP 400 curl 22 The requested URL returned error: 400
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly</code></pre>
+<p>Then it is possible that a large push to the <code>gh-pages</code> branch could exceed the default buffer size. If this is the case, increase the buffer size and try again.</p>
+<pre><code>git config --global http.postBuffer 157286400</code></pre>
+</div>
+</div>
 <p>Now, I will work on the website structure. I’m not completely clear on the structure I want, but I’m thinking of creating a couple of sections and .qmd files within each section.</p>
 <p>The website structure is something you want work in <code>_quarto.yml</code>.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here are few resources that I found helpful:</p>
+<ul>
+<li><a href="https://quarto.org/docs/books/book-structure.html">Understanding book structure in Quarto</a></li>
+<li><a href="https://quarto.org/docs/websites/website-navigation.html">Various navigations in Quarto</a></li>
+<li><a href="https://quarto.org/docs/publishing/github-pages.html">How to publish a Quarto website to GitHub Pages</a></li>
+<li><a href="https://quarto.org/docs/authoring/callouts.html">Call out block in Quarto</a> - this is similar to the admonition block in Jupyter book.</li>
+</ul>
+</div>
+</div>
 
 
 
