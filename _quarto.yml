@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: docs
+  output-dir: _site
 
 website:
   title: "quarto_exp"
@@ -8,13 +8,70 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: docs/cloud-computing/about.qmd
+        text: Cloud Computing
+      - href: docs/machine-learning/about.qmd
+        text: Machine Learning
+      - href: docs/misc/about.qmd
+        text: Miscellaneous
+
+  sidebar:
+    - id: cloud-computing
+      title: "Cloud Computing"
+      contents:
+        - section: "Cloud section1"
+          href: docs/cloud-computing/about.qmd
+          contents:
+            - text: "Topic 1"
+              href: docs/cloud-computing/topic1.qmd
+            - text: "Topic 2"
+              href: docs/cloud-computing/topic2.qmd
+        - section: "Cloud section2"
+          href: docs/cloud-computing/about.qmd
+          contents:
+            - text: "Topic 1"
+              href: docs/cloud-computing/topic1.qmd
+            - text: "Topic 2"
+              href: docs/cloud-computing/topic2.qmd
+
+    - id: machine-learning
+      title: "Machine Learning"
+      contents:
+        - section: "ML section1"
+          href: docs/machine-learning/about.qmd
+          contents:
+            - text: "Topic 1"
+              href: docs/machine-learning/topic1.qmd
+            - text: "Topic 2"
+              href: docs/machine-learning/topic2.qmd
+        - section: "ML section2"
+          href: docs/machine-learning/about.qmd
+          contents:
+            - text: "Topic 1"
+              href: docs/machine-learning/topic1.qmd
+            - text: "Topic 2"
+              href: docs/machine-learning/topic2.qmd
+
+    - id: misc
+      title: "Miscellaneous"
+      contents:
+        - section: "Misc section1"
+          href: docs/misc/about.qmd
+          contents:
+            - text: "Topic 1"
+              href: docs/misc/topic1.qmd
+            - text: "Topic 2"
+              href: docs/misc/topic2.qmd
+        - section: "Misc section2"
+          href: docs/misc/about.qmd
+          contents:
+            - text: "Topic 1"
+              href: docs/misc/topic1.qmd
+            - text: "Topic 2"
+              href: docs/misc/topic2.qmd
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
-
-
-
