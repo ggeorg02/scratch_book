@@ -1,5 +1,33 @@
 [
   {
+    "objectID": "docs/misc/about.html",
+    "href": "docs/misc/about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "docs/genomics/about.html",
+    "href": "docs/genomics/about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "docs/cloud-computing/about.html",
+    "href": "docs/cloud-computing/about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "docs/machine-learning/about.html",
+    "href": "docs/machine-learning/about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "quarto_exp",
