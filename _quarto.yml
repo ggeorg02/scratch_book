@@ -65,8 +65,8 @@ website:
         - section: "Misc section2"
           href: docs/misc/about.qmd
           contents:
-            - text: "Topic 1"
-              href: docs/misc/topic1.qmd
+            - text: "Setting up website using Quarto"
+              href: docs/misc/quarto-start.qmd
             - text: "Topic 2"
               href: docs/misc/topic2.qmd
 

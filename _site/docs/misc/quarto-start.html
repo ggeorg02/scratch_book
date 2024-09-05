@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quarto_exp - About</title>
+<title>quarto_exp - Setting up website using Quarto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -98,7 +98,7 @@ ul.task-list li input[type="checkbox"] {
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">About</h1>
+      <h1 class="quarto-secondary-nav-title">Setting up website using Quarto</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -113,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../docs/misc/about.html" class="sidebar-item-text sidebar-link active">Misc section1</a>
+            <a href="../../docs/misc/about.html" class="sidebar-item-text sidebar-link">Misc section1</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -141,7 +141,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../docs/misc/quarto-start.html" class="sidebar-item-text sidebar-link">Setting up website using Quarto</a>
+  <a href="../../docs/misc/quarto-start.html" class="sidebar-item-text sidebar-link active">Setting up website using Quarto</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -163,7 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">About</h1>
+<h1 class="title d-none d-lg-block">Setting up website using Quarto</h1>
 </div>
 
 
@@ -177,7 +177,24 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>About this site</p>
+<p>In this session, you will see how I developed the website you are currently viewing.</p>
+<p>I will be using VSCode to work with Quarto and to develop the website.</p>
+<p>First, I want to add the Quarto extension in VSCode.</p>
+<p><img src="img/quartoextension.png" class="img-fluid"></p>
+<p>Next, I will create a project.</p>
+<p><img src="img/addproject.png" class="img-fluid"></p>
+<p>After clicking on Quarto: Create Project, select “Website Project.”</p>
+<p><img src="img/websiteproject.png" class="img-fluid"></p>
+<p>This provides a skeleton for the website.</p>
+<p><img src="img/quartoskeleton.png" class="img-fluid"></p>
+<p>After this, you can render the website to see if it is working. I used the command line for this. I navigated to the folder where my project is located and ran quarto preview.</p>
+<p><img src="img/quartopreview.png" class="img-fluid"></p>
+<p>I can also render it to create the HTML for the website.</p>
+<p><img src="img/quartorender.png" class="img-fluid"></p>
+<p>Woohoo! It looks quite neat.</p>
+<p><img src="img/quartoafterrender.png" class="img-fluid"></p>
+<p>Now, I will work on the website structure. I’m not completely clear on the structure I want, but I’m thinking of creating a couple of sections and .qmd files within each section.</p>
+<p>The website structure is something you want work in <code>_quarto.yml</code>.</p>
 
 
 

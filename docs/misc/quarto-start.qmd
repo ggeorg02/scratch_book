@@ -1,0 +1,40 @@
+---
+title: Setting up website using Quarto
+editor: { render-on-save: true }
+---
+
+In this session, you will see how I developed the website you are currently viewing.
+
+I will be using VSCode to work with Quarto and to develop the website.
+
+First, I want to add the Quarto extension in VSCode.
+
+![](img/quartoextension.png)
+
+Next, I will create a project.
+
+![](img/addproject.png)
+
+After clicking on Quarto: Create Project, select "Website Project."
+
+![](img/websiteproject.png)
+
+This provides a skeleton for the website.
+
+![](img/quartoskeleton.png)
+
+After this, you can render the website to see if it is working. I used the command line for this. I navigated to the folder where my project is located and ran quarto preview.
+
+![](img/quartopreview.png)
+
+I can also render it to create the HTML for the website.
+
+![](img/quartorender.png)
+
+Woohoo! It looks quite neat.
+
+![](img/quartoafterrender.png)
+
+Now, I will work on the website structure. I’m not completely clear on the structure I want, but I’m thinking of creating a couple of sections and .qmd files within each section.
+
+The website structure is something you want work in `_quarto.yml`.

@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "docs/misc/quarto-start.html",
+    "href": "docs/misc/quarto-start.html",
+    "title": "Setting up website using Quarto",
+    "section": "",
+    "text": "I will be using VSCode to work with Quarto and to develop the website.\nFirst, I want to add the Quarto extension in VSCode.\n\nNext, I will create a project.\n\nAfter clicking on Quarto: Create Project, select “Website Project.”\n\nThis provides a skeleton for the website.\n\nAfter this, you can render the website to see if it is working. I used the command line for this. I navigated to the folder where my project is located and ran quarto preview.\n\nI can also render it to create the HTML for the website.\n\nWoohoo! It looks quite neat.\n\nNow, I will work on the website structure. I’m not completely clear on the structure I want, but I’m thinking of creating a couple of sections and .qmd files within each section.\nThe website structure is something you want work in _quarto.yml."
+  },
+  {
     "objectID": "docs/misc/about.html",
     "href": "docs/misc/about.html",
     "title": "About",
