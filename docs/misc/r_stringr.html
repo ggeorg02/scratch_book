@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>quarto_exp - Working with strings in R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">quarto_exp</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../docs/cloud-computing/about.html">Cloud Computing</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../docs/machine-learning/about.html">Machine Learning</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../docs/misc/about.html" aria-current="page">R programming</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Working with strings in R</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../docs/misc/about.html" class="sidebar-item-text sidebar-link">Misc section1</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/misc/quarto-start.html" class="sidebar-item-text sidebar-link">Setting up website using Quarto</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/misc/useqmd_vscode.html" class="sidebar-item-text sidebar-link">Use Quarto in VS Code</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/misc/r_stringr.html" class="sidebar-item-text sidebar-link active">Working with strings in R</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/misc/r_lubridate.html" class="sidebar-item-text sidebar-link">Working with dates in R</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/misc/r_factors.html" class="sidebar-item-text sidebar-link">Working with factors in R</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/misc/r_factors.html" class="sidebar-item-text sidebar-link">Working with factors in R</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#scope" id="toc-scope" class="nav-link active" data-scroll-target="#scope">Scope</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Working with strings in R</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="scope" class="level1">
+<h1>Scope</h1>
+<p>In this article, we will cover how to get started with working with strings in R.</p>
+<p>We will use the <code>stringr</code> package to work with strings in R.</p>
+<p>Here is the reference to the <a href="https://stringr.tidyverse.org/">stringr package</a>.</p>
+<p>There are many functions available in the <code>stringr</code> package to help you work with strings. We won’t have time to cover all of them, but we will go through some to get you started. You can refer to the <a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/strings.pdf">cheat sheet</a> for the package to explore more string functions that may be helpful.</p>
+</section>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Why we want to learn how to work with strings in R?</p>
+<ul>
+<li>There are many situations where you want to extract some information from the strings. Eg..
+<ul>
+<li>Say you have a column with reviews on movies. You want to pull in all the movie names that mentioned “Great screenplay”, “Great acting” etc. within the review column.</li>
+<li>Say you have a column with email addresses. You want to pull in all the email addresses that have the domain “gmail.com”.</li>
+<li>Say you have a column with phone numbers. You want to pull in all the phone numbers that have the country code “91”.</li>
+</ul></li>
+<li>There could be situations where you want to clean the strings. Eg..
+<ul>
+<li>Say you have a column with names. You want to separate the first name and last name.</li>
+<li>say you have multiple columns with house number, street, city, state and country. You want to combine all of them to get the full address.</li>
+<li>Say there was an error in the data entry in a column and you want to correct the mistake. You want to change the company name from “Applle” to “Apple”.</li>
+</ul></li>
+</ul>
+<p>There could be many more situations where you want to work with strings. Here you will get experience with some of the situations that we mentioned above.</p>
+<p>Below I will demonstrate both on the <code>lakers</code> data frame below (which is the Los Angeles Lakers 2008-2009 basketball data set from the <code>lubridate</code> package):</p>
+<p>Why do we want to learn how to work with strings in R?</p>
+<ul>
+<li>There are many situations where you might want to extract information from strings. For eg:
+<ul>
+<li>Suppose you have a column with movie reviews and you want to extract all movie names that mention “Great screenplay,” “Great acting,” etc., within the review column.</li>
+<li>Suppose you have a column with email addresses and you want to extract all email addresses that have the domain “gmail.com.”</li>
+<li>Suppose you have a column with phone numbers and you want to extract all phone numbers that have the country code “91.”</li>
+</ul></li>
+<li>There are also situations where you might want to clean strings. For eg:
+<ul>
+<li>Suppose you have a column with names and you want to separate the first name and last name.</li>
+<li>Suppose you have multiple columns with house number, street, city, state, and country, and you want to combine them into a full address.</li>
+<li>Suppose there was an error in the data entry in a column, and you want to correct the mistake, such as changing the company name from “Applle” to “Apple.”</li>
+</ul></li>
+</ul>
+<p>There could be many more situations where you need to work with strings. In this article, you will gain experience with some of the situations mentioned above.</p>
+<p>Below, I will demonstrate these techniques using the <code>lakers</code> data frame (which is the Los Angeles Lakers 2008-2009 basketball data set from the <code>lubridate</code> package):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'lubridate'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr   1.1.4     ✔ readr   2.1.5
+✔ forcats 1.0.0     ✔ tibble  3.2.1
+✔ ggplot2 3.5.1     ✔ tidyr   1.3.1
+✔ purrr   1.0.2     </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<p>Here is the data frame:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lakers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date opponent game_type  time period     etype team              player
+1 20081028      POR      home 12:00      1 jump ball  OFF                    
+2 20081028      POR      home 11:39      1      shot  LAL           Pau Gasol
+3 20081028      POR      home 11:37      1   rebound  LAL Vladimir Radmanovic
+4 20081028      POR      home 11:25      1      shot  LAL        Derek Fisher
+5 20081028      POR      home 11:23      1   rebound  LAL           Pau Gasol
+6 20081028      POR      home 11:22      1      shot  LAL           Pau Gasol
+  result points  type  x  y
+1             0       NA NA
+2 missed      0  hook 23 13
+3             0   off NA NA
+4 missed      0 layup 25  6
+5             0   off NA NA
+6   made      2  hook 25 10</code></pre>
+</div>
+</div>
+<p>Let’s now get on with some questions:</p>
+<blockquote class="blockquote">
+<p><strong><em>Discussion:</em></strong> I want to know the first name and last name of the players in the <code>lakers</code> data frame. How can I do that?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lakers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date opponent game_type  time period     etype team              player
+1 20081028      POR      home 12:00      1 jump ball  OFF                    
+2 20081028      POR      home 11:39      1      shot  LAL           Pau Gasol
+3 20081028      POR      home 11:37      1   rebound  LAL Vladimir Radmanovic
+4 20081028      POR      home 11:25      1      shot  LAL        Derek Fisher
+5 20081028      POR      home 11:23      1   rebound  LAL           Pau Gasol
+6 20081028      POR      home 11:22      1      shot  LAL           Pau Gasol
+  result points  type  x  y
+1             0       NA NA
+2 missed      0  hook 23 13
+3             0   off NA NA
+4 missed      0 layup 25  6
+5             0   off NA NA
+6   made      2  hook 25 10</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">separate</span>(player, <span class="at">into =</span><span class="fu">c</span>(<span class="st">"first_name"</span>, <span class="st">"last_name"</span>), <span class="at">sep =</span> <span class="st">" "</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Expected 2 pieces. Additional pieces discarded in 59 rows [2417, 2419, 5601,
+5615, 5617, 5655, 5666, 5668, 5681, 5684, 5704, 5714, 5718, 5777, 5788, 7745,
+7748, 7770, 7785, 7816, ...].</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Expected 2 pieces. Missing pieces filled with `NA` in 5398 rows [1, 35, 40, 44,
+50, 51, 52, 69, 70, 81, 82, 83, 84, 96, 97, 105, 110, 114, 123, 127, ...].</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date opponent game_type  time period     etype team first_name  last_name
+1 20081028      POR      home 12:00      1 jump ball  OFF                  &lt;NA&gt;
+2 20081028      POR      home 11:39      1      shot  LAL        Pau      Gasol
+3 20081028      POR      home 11:37      1   rebound  LAL   Vladimir Radmanovic
+4 20081028      POR      home 11:25      1      shot  LAL      Derek     Fisher
+5 20081028      POR      home 11:23      1   rebound  LAL        Pau      Gasol
+6 20081028      POR      home 11:22      1      shot  LAL        Pau      Gasol
+  result points  type  x  y
+1             0       NA NA
+2 missed      0  hook 23 13
+3             0   off NA NA
+4 missed      0 layup 25  6
+5             0   off NA NA
+6   made      2  hook 25 10</code></pre>
+</div>
+</div>
+<p>When you run this code you will see that the <code>player</code> column has been split into two columns <code>first_name</code> and <code>last_name</code>. But you will also get following warning:</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Warning messages: 1: Expected 2 pieces. Additional pieces discarded in 59 rows [2417, 2419, 5601, 5615, 5617, 5655, 5666, 5668, 5681, 5684, 5704, 5714, 5718, 5777, 5788, 7745, 7748, 7770, 7785, 7816, …]. 2: Expected 2 pieces. Missing pieces filled with <code>NA</code> in 5398 rows [1, 35, 40, 44, 50, 51, 52, 69, 70, 81, 82, 83, 84, 96, 97, 105, 110, 114, 123, 127, …].</p>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong><em>Discussion:</em></strong> What do you think is happening in the above code?</p>
+</blockquote>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <em><strong><em>warning 1</em></strong></em> message is saying that there are some rows where the <code>player</code> column doesn’t have two pieces. This is because there could be some players who have middle names.</p>
+<p>To handle this situation, you can use the <code>extra</code> argument in the <code>separate()</code> function. This will only splits at most length(into) times.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>new_lakers <span class="ot">&lt;-</span> lakers <span class="sc">|&gt;</span> <span class="fu">separate</span>(player, <span class="at">into =</span><span class="fu">c</span>(<span class="st">"first_name"</span>, <span class="st">"last_name"</span>), <span class="at">sep =</span> <span class="st">" "</span>, <span class="at">extra =</span> <span class="st">"merge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Expected 2 pieces. Missing pieces filled with `NA` in 5398 rows [1, 35, 40, 44,
+50, 51, 52, 69, 70, 81, 82, 83, 84, 96, 97, 105, 110, 114, 123, 127, ...].</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>new_lakers <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date opponent game_type  time period     etype team first_name  last_name
+1 20081028      POR      home 12:00      1 jump ball  OFF                  &lt;NA&gt;
+2 20081028      POR      home 11:39      1      shot  LAL        Pau      Gasol
+3 20081028      POR      home 11:37      1   rebound  LAL   Vladimir Radmanovic
+4 20081028      POR      home 11:25      1      shot  LAL      Derek     Fisher
+5 20081028      POR      home 11:23      1   rebound  LAL        Pau      Gasol
+6 20081028      POR      home 11:22      1      shot  LAL        Pau      Gasol
+  result points  type  x  y
+1             0       NA NA
+2 missed      0  hook 23 13
+3             0   off NA NA
+4 missed      0 layup 25  6
+5             0   off NA NA
+6   made      2  hook 25 10</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <em><strong><em>warning 2</em></strong></em> message is saying that there are some rows where the <code>player</code> column doesn’t have two pieces. This is because there are some players who only have one name.</p>
+<p>It is fair to have a missing value in the <code>last_name</code> column for these players as NA. So we can ignore this warning.</p>
+<p>Let’s explore a player to see what is happening.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>new_lakers <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(last_name)) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date opponent game_type  time period     etype team first_name last_name
+1 20081028      POR      home 12:00      1 jump ball  OFF                 &lt;NA&gt;
+2 20081028      POR      home 07:49      1   timeout  POR                 &lt;NA&gt;
+3 20081028      POR      home 07:24      1       sub  POR                 &lt;NA&gt;
+4 20081028      POR      home 06:39      1   rebound  POR                 &lt;NA&gt;
+5 20081028      POR      home 05:52      1   rebound  POR                 &lt;NA&gt;
+6 20081028      POR      home 05:50      1       sub  LAL                 &lt;NA&gt;
+  result points    type  x  y
+1             0         NA NA
+2             0 regular NA NA
+3             0         NA NA
+4             0         NA NA
+5             0         NA NA
+6             0         NA NA</code></pre>
+</div>
+</div>
+<p>Seems like these are situations where the player name is not recorded. If we really want to work out something with the name column then these rows might not makes much sense and fair to remove them.</p>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong><em>Exercise:</em></strong> Can you try now to bring back the <code>player</code> column by combining the <code>first_name</code> and <code>last_name</code> columns?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>new_lakers <span class="sc">|&gt;</span> <span class="fu">unite</span>(<span class="st">'player'</span>,first_name, last_name, <span class="at">sep =</span> <span class="st">" "</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date opponent game_type  time period     etype team              player
+1 20081028      POR      home 12:00      1 jump ball  OFF                  NA
+2 20081028      POR      home 11:39      1      shot  LAL           Pau Gasol
+3 20081028      POR      home 11:37      1   rebound  LAL Vladimir Radmanovic
+4 20081028      POR      home 11:25      1      shot  LAL        Derek Fisher
+5 20081028      POR      home 11:23      1   rebound  LAL           Pau Gasol
+6 20081028      POR      home 11:22      1      shot  LAL           Pau Gasol
+  result points  type  x  y
+1             0       NA NA
+2 missed      0  hook 23 13
+3             0   off NA NA
+4 missed      0 layup 25  6
+5             0   off NA NA
+6   made      2  hook 25 10</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong><em>Discussion:</em></strong> Can you pull all the rows where the player name that starts with <code>Lo</code>?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(player, <span class="st">"^Lo"</span>)) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date opponent game_type  time period    etype team         player result
+1 20081120      PHX      away 03:51      4  rebound  PHX Louis Amundson       
+2 20081120      PHX      away 02:42      4  rebound  PHX Louis Amundson       
+3 20081120      PHX      away 00:52      4     shot  PHX Louis Amundson   made
+4 20081203      PHI      away 03:19      1 turnover  PHI   Lou Williams       
+5 20081203      PHI      away 02:26      1     shot  PHI   Lou Williams missed
+6 20081203      PHI      away 00:47      1 turnover  PHI   Lou Williams       
+  points            type  x  y
+1      0             def NA NA
+2      0             def NA NA
+3      2 turnaround jump 23 14
+4      0                 NA NA
+5      0            jump 39 16
+6      0                 NA NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(player, <span class="st">"Lo.*"</span>)) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date opponent game_type  time period   etype team         player result
+1 20081120      PHX      away 03:51      4 rebound  PHX Louis Amundson       
+2 20081120      PHX      away 02:42      4 rebound  PHX Louis Amundson       
+3 20081120      PHX      away 02:36      4    shot  PHX    Robin Lopez   made
+4 20081120      PHX      away 00:52      4    shot  PHX Louis Amundson   made
+5 20081120      PHX      away 00:19      4    shot  PHX    Robin Lopez missed
+6 20081125      NJN      home 10:30      1    shot  NJN    Brook Lopez   made
+  points            type  x  y
+1      0             def NA NA
+2      0             def NA NA
+3      2   reverse layup 25  6
+4      2 turnaround jump 23 14
+5      0            jump 18  9
+6      2            jump 15 20</code></pre>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make sure you use the correct regex pattern when using the <code>str_detect()</code> function. You need to understand the difference between <code>^Lo</code> and <code>Lo.*</code>. The former will pull in all the players whose name starts with <code>Lo</code> and the latter will pull in all the players whose name contains <code>Lo</code>.</p>
+<p>You can’t use <code>starts_with()</code> function in the <code>filter()</code> function in this case. <code>starts_with()</code> function is used within selecting function. Below won’t work.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lakers |&gt; filter(str_detect(player, starts_with("Lo"))) |&gt; head()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong><em>Exercise:</em></strong> Can you get all the players whose last name started with Lo ?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(player, <span class="st">"^</span><span class="sc">\\</span><span class="st">w+</span><span class="sc">\\</span><span class="st">s+Lo"</span>)) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date opponent game_type  time period   etype team      player result
+1 20081120      PHX      away 02:36      4    shot  PHX Robin Lopez   made
+2 20081120      PHX      away 00:19      4    shot  PHX Robin Lopez missed
+3 20081125      NJN      home 10:30      1    shot  NJN Brook Lopez   made
+4 20081125      NJN      home 08:28      1    shot  NJN Brook Lopez   made
+5 20081125      NJN      home 07:45      1    shot  NJN Brook Lopez   made
+6 20081125      NJN      home 07:29      1 rebound  NJN Brook Lopez       
+  points           type  x  y
+1      2  reverse layup 25  6
+2      0           jump 18  9
+3      2           jump 15 20
+4      2 alley oop dunk 25  6
+5      2          layup 25  6
+6      0            def NA NA</code></pre>
+</div>
+</div>
+<ul>
+<li><code>^\\w+</code> matches the first name (any sequence of alphanumeric characters at the start).</li>
+<li><code>\\s+</code> matches one or more spaces between the first and second names.</li>
+<li><code>Lo</code> checks if the second name (last name) starts with “Lo.”</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong><em>Exercise:</em></strong> Can you get all the players who got more than first and last name ?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">str_count</span>(player, <span class="st">" "</span>) <span class="sc">&gt;=</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(player) <span class="sc">|&gt;</span> <span class="fu">unique</span>() <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Jose Juan Barea"          "Luc Richard Mbah a Moute"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  following is also picking J.R. Smith which is not correct. check again the regex pattern.</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">str_count</span>(player,<span class="st">"</span><span class="sc">\\</span><span class="st">w+"</span>) <span class="sc">&gt;</span> <span class="dv">2</span>)  <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date opponent game_type  time period   etype team     player result
+1 20081101      DEN      away 03:10      1    foul  DEN J.R. Smith       
+2 20081101      DEN      away 10:25      2    shot  DEN J.R. Smith missed
+3 20081101      DEN      away 09:36      2    shot  DEN J.R. Smith   made
+4 20081101      DEN      away 08:18      2    shot  DEN J.R. Smith missed
+5 20081101      DEN      away 06:41      2 rebound  DEN J.R. Smith       
+6 20081101      DEN      away 06:05      2    shot  DEN J.R. Smith missed
+  points         type  x  y
+1      0     shooting NA NA
+2      0 running jump 25 13
+3      2    slam dunk 25  6
+4      0          3pt 46 23
+5      0          def NA NA
+6      0          3pt 44 26</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong><em>Exercise:</em></strong> Can you get all the players whose middle name is Richard ?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(player, <span class="st">"^</span><span class="sc">\\</span><span class="st">w+</span><span class="sc">\\</span><span class="st">s+Richard</span><span class="sc">\\</span><span class="st">b"</span>)) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date opponent game_type  time period    etype team
+1 20081207      MIL      home 06:08      1     shot  MIL
+2 20081207      MIL      home 05:56      1 turnover  MIL
+3 20081207      MIL      home 02:56      1     shot  MIL
+4 20081207      MIL      home 01:31      1  rebound  MIL
+5 20081207      MIL      home 10:07      2     shot  MIL
+6 20081207      MIL      home 04:17      2 turnover  MIL
+                    player result points          type  x  y
+1 Luc Richard Mbah a Moute missed      0 reverse layup 25  6
+2 Luc Richard Mbah a Moute             0               NA NA
+3 Luc Richard Mbah a Moute missed      0          jump  5  5
+4 Luc Richard Mbah a Moute             0           off NA NA
+5 Luc Richard Mbah a Moute missed      0          jump 44  7
+6 Luc Richard Mbah a Moute             0               NA NA</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong><em>Exercise:</em></strong> Can you pull all the rows where the player name that ends with <code>wry</code>?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(player, <span class="st">"wry$"</span>)) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date opponent game_type  time period      etype team     player result
+1 20081222      MEM      away 09:33      1       shot  MEM Kyle Lowry missed
+2 20081222      MEM      away 04:59      1    rebound  MEM Kyle Lowry       
+3 20081222      MEM      away 04:39      1       shot  MEM Kyle Lowry missed
+4 20081222      MEM      away 03:01      1       shot  MEM Kyle Lowry   made
+5 20081222      MEM      away 03:01      1 free throw  MEM Kyle Lowry   made
+6 20081222      MEM      away 09:57      3       foul  MEM Kyle Lowry       
+  points          type  x  y
+1      0           3pt 13 28
+2      0           def NA NA
+3      0     jump bank 30 12
+4      2 driving layup 25  6
+5      1               NA NA
+6      0      shooting NA NA</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong><em>Exercise:</em></strong> Can you get all the players whose first name is <code>Lou</code> ?</p>
+</blockquote>
+<p>The following code doesn’t work as expected. Can you think why?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(player, <span class="st">"^Lou"</span>)) <span class="sc">|&gt;</span> <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 66</code></pre>
+</div>
+</div>
+<p>Correct approach:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(player, <span class="st">"^Lou</span><span class="sc">\\</span><span class="st">b"</span>)) <span class="sc">|&gt;</span> <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 33</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong><em>Exercise:</em></strong> Can you get all the players whose first name is <code>Lou</code> and last name is <code>Williams</code> ?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(player, <span class="st">"Lou Williams"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       date opponent game_type  time period      etype team       player result
+1  20081203      PHI      away 03:19      1   turnover  PHI Lou Williams       
+2  20081203      PHI      away 02:26      1       shot  PHI Lou Williams missed
+3  20081203      PHI      away 00:47      1   turnover  PHI Lou Williams       
+4  20081203      PHI      away 00:03      1       shot  PHI Lou Williams missed
+5  20081203      PHI      away 11:20      4       shot  PHI Lou Williams   made
+6  20081203      PHI      away 10:45      4       shot  PHI Lou Williams   made
+7  20081203      PHI      away 10:20      4 free throw  PHI Lou Williams   made
+8  20081203      PHI      away 10:20      4 free throw  PHI Lou Williams   made
+9  20081203      PHI      away 05:54      4       shot  PHI Lou Williams   made
+10 20081203      PHI      away 04:54      4       shot  PHI Lou Williams   made
+11 20081203      PHI      away 00:54      4       shot  PHI Lou Williams   made
+12 20081203      PHI      away 00:19      4       shot  PHI Lou Williams missed
+13 20090317      PHI      home 00:01      1       shot  PHI Lou Williams   made
+14 20090317      PHI      home 11:09      2       shot  PHI Lou Williams   made
+15 20090317      PHI      home 11:09      2 free throw  PHI Lou Williams   made
+16 20090317      PHI      home 10:38      2   turnover  PHI Lou Williams       
+17 20090317      PHI      home 09:26      2       shot  PHI Lou Williams   made
+18 20090317      PHI      home 09:26      2 free throw  PHI Lou Williams   made
+19 20090317      PHI      home 08:56      2       shot  PHI Lou Williams   made
+20 20090317      PHI      home 08:56      2 free throw  PHI Lou Williams   made
+21 20090317      PHI      home 05:39      2       foul  PHI Lou Williams       
+22 20090317      PHI      home 03:35      2       shot  PHI Lou Williams   made
+23 20090317      PHI      home 01:44      2       shot  PHI Lou Williams missed
+24 20090317      PHI      home 00:44      2       shot  PHI Lou Williams missed
+25 20090317      PHI      home 00:33      2       shot  PHI Lou Williams missed
+26 20090317      PHI      home 00:26      2       shot  PHI Lou Williams missed
+27 20090317      PHI      home 00:50      3       shot  PHI Lou Williams missed
+28 20090317      PHI      home 10:59      4       shot  PHI Lou Williams   made
+29 20090317      PHI      home 06:00      4       shot  PHI Lou Williams missed
+30 20090317      PHI      home 04:03      4       shot  PHI Lou Williams   made
+31 20090317      PHI      home 01:26      4       shot  PHI Lou Williams missed
+32 20090317      PHI      home 01:02      4    rebound  PHI Lou Williams       
+33 20090317      PHI      home 00:29      4       shot  PHI Lou Williams missed
+   points           type  x  y
+1       0                NA NA
+2       0           jump 39 16
+3       0                NA NA
+4       0            3pt  2 10
+5       2           jump 35 20
+6       3            3pt 49  5
+7       1                NA NA
+8       1                NA NA
+9       3            3pt 23 33
+10      3            3pt 25 33
+11      2           jump 14 18
+12      0            3pt 49  4
+13      2 step back jump 27 29
+14      2  driving layup 25  6
+15      1                NA NA
+16      0                NA NA
+17      2  driving layup 25  6
+18      1                NA NA
+19      2   running jump 32  6
+20      1                NA NA
+21      0       shooting NA NA
+22      3            3pt  2 12
+23      0            3pt 38 28
+24      0            3pt 47 16
+25      0            3pt 48  7
+26      0          layup 25  6
+27      0          layup 25  6
+28      2          layup 25  6
+29      0           jump 29 29
+30      2          layup 25  6
+31      0          layup 25  6
+32      0            def NA NA
+33      0          layup 25  6</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong><em>Exercise:</em></strong> Can you get all the rows with no player names?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(player, <span class="st">"^$"</span>)) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date opponent game_type  time period     etype team player result points
+1 20081028      POR      home 12:00      1 jump ball  OFF                    0
+2 20081028      POR      home 07:49      1   timeout  POR                    0
+3 20081028      POR      home 07:24      1       sub  POR                    0
+4 20081028      POR      home 06:39      1   rebound  POR                    0
+5 20081028      POR      home 05:52      1   rebound  POR                    0
+6 20081028      POR      home 05:50      1       sub  LAL                    0
+     type  x  y
+1         NA NA
+2 regular NA NA
+3         NA NA
+4         NA NA
+5         NA NA
+6         NA NA</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong><em>Exercise:</em></strong> Get all the players who got “ant” within their names?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(<span class="fu">tolower</span>(player), <span class="st">"ant"</span>)) <span class="sc">|&gt;</span> <span class="fu">pull</span>(player) <span class="sc">|&gt;</span> <span class="fu">unique</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Kobe Bryant"      "Carmelo Anthony"  "Anthony Carter"   "Antoine Wright"  
+ [5] "Grant Hill"       "Anthony Parker"   "Antawn Jamison"   "Antonio Daniels" 
+ [9] "Rashad McCants"   "Joel Anthony"     "Anthony Johnson"  "Anthony Randolph"
+[13] "Kevin Durant"     "Anthony Morrow"   "Antonio McDyess" </code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong><em>Exercise:</em></strong> If there is no entry in the <code>player</code> column, replace it with “no name” ?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">player =</span> <span class="fu">str_replace</span>(player, <span class="st">"^$"</span>, <span class="st">"no name"</span>)) <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      date opponent game_type  time period     etype team              player
+1 20081028      POR      home 12:00      1 jump ball  OFF             no name
+2 20081028      POR      home 11:39      1      shot  LAL           Pau Gasol
+3 20081028      POR      home 11:37      1   rebound  LAL Vladimir Radmanovic
+4 20081028      POR      home 11:25      1      shot  LAL        Derek Fisher
+5 20081028      POR      home 11:23      1   rebound  LAL           Pau Gasol
+6 20081028      POR      home 11:22      1      shot  LAL           Pau Gasol
+  result points  type  x  y
+1             0       NA NA
+2 missed      0  hook 23 13
+3             0   off NA NA
+4 missed      0 layup 25  6
+5             0   off NA NA
+6   made      2  hook 25 10</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>*** Exercise:*** Can you make the data more readable by replacing all “3pt” to “3 point” within the <code>type</code> column?</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>lakers <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">str_replace</span>(type, <span class="st">"3pt"</span>, <span class="st">"3 point"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>( type <span class="sc">==</span> <span class="st">"3 point"</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       date opponent game_type  time period etype team              player
+1  20081028      POR      home 05:13      1  shot  POR         Steve Blake
+2  20081028      POR      home 04:06      1  shot  LAL Vladimir Radmanovic
+3  20081028      POR      home 03:48      1  shot  POR      Rudy Fernandez
+4  20081028      POR      home 03:34      1  shot  LAL          Lamar Odom
+5  20081028      POR      home 03:24      1  shot  POR         Steve Blake
+6  20081028      POR      home 01:31      1  shot  LAL        Trevor Ariza
+7  20081028      POR      home 00:35      1  shot  POR       Channing Frye
+8  20081028      POR      home 00:00      1  shot  LAL       Sasha Vujacic
+9  20081028      POR      home 11:23      2  shot  POR    Sergio Rodriguez
+10 20081028      POR      home 10:51      2  shot  POR       Channing Frye
+   result points    type  x  y
+1  missed      0 3 point 47  6
+2  missed      0 3 point  1  6
+3  missed      0 3 point 38 28
+4  missed      0 3 point 41 26
+5  missed      0 3 point 44 24
+6    made      3 3 point 46 17
+7  missed      0 3 point 26 32
+8  missed      0 3 point 37 30
+9  missed      0 3 point 43 25
+10 missed      0 3 point 17 32</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
