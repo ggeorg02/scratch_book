@@ -1,0 +1,200 @@
+---
+title: Working with strings in R
+editor: { render-on-save: true }
+---
+
+# Scope
+
+In this article, we will cover how to get started with working with strings in R.
+
+We will use the `stringr` package to work with strings in R.
+
+Here is the reference to the [stringr package](https://stringr.tidyverse.org/).
+
+There are many functions available in the `stringr` package to help you work with strings. We won't have time to cover all of them, but we will go through some to get you started. You can refer to the [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/strings.pdf) for the package to explore more string functions that may be helpful.
+
+# Introduction 
+
+Why we want to learn how to work with strings in R? 
+
+- There are many situations where you want to extract some information from the strings. Eg..
+  - Say you have a column with reviews on movies. You want to pull in all the movie names that mentioned "Great screenplay", "Great acting" etc. within the review column.
+  - Say you have a column with email addresses. You want to pull in all the email addresses that have the domain "gmail.com".
+  - Say you have a column with phone numbers. You want to pull in all the phone numbers that have the country code "91".
+- There could be situations where you want to clean the strings. Eg..
+  - Say you have a column with names. You want to separate the first name and last name.
+  - say you have multiple columns with house number, street, city, state and country. You want to combine all of them to get the full address. 
+  - Say there was an error in the data entry in a column and you want to correct the mistake. You want to change the company name from "Applle" to "Apple".
+
+There could be many more situations where you want to work with strings. Here you will get experience with some of the situations that we mentioned above. 
+
+
+Below I will demonstrate both on the `lakers` data frame below (which is the Los Angeles Lakers 2008-2009 basketball data set from the `lubridate` package):
+
+Why do we want to learn how to work with strings in R?
+
+- There are many situations where you might want to extract information from strings. For eg:
+  - Suppose you have a column with movie reviews and you want to extract all movie names that mention "Great screenplay," "Great acting," etc., within the review column.
+  - Suppose you have a column with email addresses and you want to extract all email addresses that have the domain "gmail.com."
+  - Suppose you have a column with phone numbers and you want to extract all phone numbers that have the country code "91."
+- There are also situations where you might want to clean strings. For eg:
+  - Suppose you have a column with names and you want to separate the first name and last name.
+  - Suppose you have multiple columns with house number, street, city, state, and country, and you want to combine them into a full address.
+  - Suppose there was an error in the data entry in a column, and you want to correct the mistake, such as changing the company name from "Applle" to "Apple."
+
+There could be many more situations where you need to work with strings. In this article, you will gain experience with some of the situations mentioned above.
+
+Below, I will demonstrate these techniques using the `lakers` data frame (which is the Los Angeles Lakers 2008-2009 basketball data set from the `lubridate` package):
+
+```{r}
+library(lubridate)
+library(stringr)
+library(tidyverse)
+```
+
+Here is the data frame:
+
+```{r}
+head(lakers)
+```
+Let's now get on with some questions:
+
+> ***Discussion:*** I want to know the first name and last name of the players in the `lakers` data frame. How can I do that?
+
+```{r}
+head(lakers)
+lakers |> separate(player, into =c("first_name", "last_name"), sep = " ") |> head()
+```
+
+When you run this code you will see that the `player` column has been split into two columns `first_name` and `last_name`. But you will also get following warning:
+
+:::{.callout-warning}
+Warning messages:
+1: Expected 2 pieces. Additional pieces discarded in 59 rows [2417, 2419, 5601, 5615, 5617, 5655, 5666,
+5668, 5681, 5684, 5704, 5714, 5718, 5777, 5788, 7745, 7748, 7770, 7785, 7816, ...]. 
+2: Expected 2 pieces. Missing pieces filled with `NA` in 5398 rows [1, 35, 40, 44, 50, 51, 52, 69, 70, 81,
+82, 83, 84, 96, 97, 105, 110, 114, 123, 127, ...]. 
+:::
+
+>***Discussion:*** What do you think is happening in the above code?
+
+:::{.callout-note}
+The _***warning 1***_ message is saying that there are some rows where the `player` column doesn't have two pieces. This is because there could be some players who have middle names. 
+
+To handle this situation, you can use the `extra` argument in the `separate()` function. This will only splits at most length(into) times.
+
+```{r}
+new_lakers <- lakers |> separate(player, into =c("first_name", "last_name"), sep = " ", extra = "merge")
+new_lakers |> head()
+```
+:::
+
+:::{.callout-note}
+The _***warning 2***_ message is saying that there are some rows where the `player` column doesn't have two pieces. This is because there are some players who only have one name. 
+
+It is fair to have a missing value in the `last_name` column for these players as NA. So we can ignore this warning. 
+
+Let's explore a player to see what is happening. 
+
+```{r}
+new_lakers |> filter(is.na(last_name)) |> head()
+```
+
+Seems like these are situations where the player name is not recorded. If we really want to work out something with the name column then these rows might not makes much sense and fair to remove them. 
+:::
+
+>***Exercise:*** Can you try now to bring back the `player` column by combining the `first_name` and `last_name` columns?
+
+```{r}
+new_lakers |> unite('player',first_name, last_name, sep = " ") |> head()
+```
+
+>***Discussion:*** Can you pull all the rows where the player name that starts with `Lo`?
+
+```{r}
+lakers |> filter(str_detect(player, "^Lo")) |> head()
+lakers |> filter(str_detect(player, "Lo.*")) |> head()
+```
+
+:::{.callout-important}
+Make sure you use the correct regex pattern when using the `str_detect()` function. You need to understand the difference between `^Lo` and `Lo.*`. The former will pull in all the players whose name starts with `Lo` and the latter will pull in all the players whose name contains `Lo`. 
+
+You can't use `starts_with()` function in the `filter()` function in this case.  `starts_with()` function is used within selecting function. Below won't work.
+```{r}
+# lakers |> filter(str_detect(player, starts_with("Lo"))) |> head()
+```
+:::
+>***Exercise:*** Can you get all the players whose last name started with Lo ?
+
+```{r}
+lakers |> filter(str_detect(player, "^\\w+\\s+Lo")) |> head()
+```
+
+- `^\\w+` matches the first name (any sequence of alphanumeric characters at the start).
+- `\\s+` matches one or more spaces between the first and second names.
+- `Lo` checks if the second name (last name) starts with "Lo."
+
+>***Exercise:*** Can you get all the players who got more than first and last name ?
+
+```{r}
+lakers |> filter(str_count(player, " ") >= 2) |> pull(player) |> unique() |> head()
+#  following is also picking J.R. Smith which is not correct. check again the regex pattern.
+lakers |> filter(str_count(player,"\\w+") > 2)  |> head()
+```
+
+>***Exercise:*** Can you get all the players whose middle name is Richard ?
+
+```{r}
+lakers |> filter(str_detect(player, "^\\w+\\s+Richard\\b")) |> head()
+```
+
+>***Exercise:*** Can you pull all the rows where the player name that ends with `wry`?
+
+```{r}
+lakers |> filter(str_detect(player, "wry$")) |> head()
+```
+
+>***Exercise:*** Can you get all the players whose first name is `Lou` ?
+
+The following code doesn't work as expected. Can you think why?
+
+```{r}
+lakers |> filter(str_detect(player, "^Lou")) |> nrow()
+```
+
+Correct approach:
+
+```{r}
+lakers |> filter(str_detect(player, "^Lou\\b")) |> nrow()
+```
+
+>***Exercise:*** Can you get all the players whose first name is `Lou` and last name is `Williams` ?
+
+```{r}
+lakers |> filter(str_detect(player, "Lou Williams"))
+```
+
+>***Exercise:*** Can you get all the rows with no player names?
+
+```{r}
+lakers |> filter(str_detect(player, "^$")) |> head()
+```
+
+>***Exercise:*** Get all the players who got "ant" within their names?
+
+```{r}
+lakers |> filter(str_detect(tolower(player), "ant")) |> pull(player) |> unique()
+```
+
+>***Exercise:*** If there is no entry in the `player` column, replace it with "no name" ?
+
+```{r}
+lakers |> mutate(player = str_replace(player, "^$", "no name")) |> head()
+```
+
+>*** Exercise:*** Can you make the data more readable by replacing all "3pt" to "3 point" within the `type` column?
+
+```{r}
+lakers |> mutate(type = str_replace(type, "3pt", "3 point")) |> 
+      filter( type == "3 point") |> head(10)
+```

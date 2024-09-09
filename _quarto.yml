@@ -13,7 +13,7 @@ website:
       - href: docs/machine-learning/about.qmd
         text: Machine Learning
       - href: docs/misc/about.qmd
-        text: Miscellaneous
+        text: R programming
 
   sidebar:
     - id: cloud-computing
@@ -53,22 +53,24 @@ website:
               href: docs/machine-learning/topic2.qmd
 
     - id: misc
-      title: "Miscellaneous"
+      title: "R programming"
       contents:
         - section: "Misc section1"
           href: docs/misc/about.qmd
           contents:
-            - text: "Topic 1"
-              href: docs/misc/topic1.qmd
-            - text: "Topic 2"
-              href: docs/misc/topic2.qmd
-        - section: "Misc section2"
-          href: docs/misc/about.qmd
-          contents:
             - text: "Setting up website using Quarto"
               href: docs/misc/quarto-start.qmd
-            - text: "Topic 2"
-              href: docs/misc/topic2.qmd
+            - text: "Use Quarto in VS Code"
+              href: docs/misc/useqmd_vscode.qmd             
+            - text: "Working with strings in R"
+              href: docs/misc/r_stringr.qmd
+            - text: "Working with dates in R"
+              href: docs/misc/r_lubridate.qmd              
+            - text: "Working with factors in R"
+              href: docs/misc/r_factors.qmd
+            - text: "Working with factors in R"
+              href: docs/misc/r_factors.qmd   
+
 
 format:
   html:

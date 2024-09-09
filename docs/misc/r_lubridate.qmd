@@ -1,0 +1,112 @@
+---
+title: Working with dates in R
+editor: { render-on-save: true }
+---
+
+# Scope
+
+In this article, we will cover how to get started with working with dates in R.
+
+We will use the lubridate package to work with dates in R.
+
+Here is the reference to the [lubridate package](https://lubridate.tidyverse.org/).
+
+# Introduction 
+
+Why do we want to learn how to work with dates in R?
+
+- Dates are a common data type in data analysis.
+- Dates can be used to filter data—for eg, by setting a date range to filter the data.
+- Dates can be used to create new features in the data — such as adding the current date (`today()`) to indicate when a row was updated.
+
+```{r}
+library(tidyverse)
+```
+```{r}
+# Create a tibble with a date column
+
+time_df <- tibble(date_col = c("15-1-2020","15-1-2019","20-1-2019","30-1-2019","13-1-2020"),
+                   other_col = c("Alice", "Bob", "Charlie", "Jab", "Bobby"))
+
+print(time_df)
+```
+
+::: {.callout-note}
+Even though in the above situation we are creating dummy tables, you can think of `dummy_tibble` as a tibble that you read from a file or a database.
+:::
+
+You can, of course, work with date columns as strings and perform all the necessary operations. However, this approach can complicate things, be error-prone, and make your code less readable. Why do all the additional and unnecessary work when you have a package that can handle it for you?
+
+Let’s use the `lubridate` package and see what it can do for us.
+
+
+```{r}
+library(lubridate)
+```
+
+# Working with dates
+
+Let's first extract the day of the week from the date column in the `time_df` tibble. For eg, if you want to determine if any of the dates fall on a Monday, you can use the `lubridate` package to accomplish this.
+
+::: {.callout-tip}
+The `wday()` in the `lubridate` package returns the day of the week. Just like this, there are many functions available in the package to help you work with dates. You don’t need to remember all of them— you can always refer to the documentation. There is also a cheat sheet available for the package. Here is the [link to the cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/lubridate.pdf).
+:::
+
+```{r}
+time_df |> filter(wday(date_col, abbr = FALSE) == 'Monday')
+```
+
+:::{.callout-warning}
+The above code didn't throw an error, but you can see that the output is not as expected. Sometimes it’s not immediately obvious if the output is correct, and you might continue working under the assumption that your code is right.
+
+IMPORTANT NOTE: Make sure to convert the date column to the correct date format by specifying the appropriate format (you will see more on this soon). Otherwise, R will perform an implicit date conversion by default, which can lead to incorrect results.
+:::
+
+> ***Discussion:*** Any thoughts on what is going on in the above code? 
+
+:::{.callout-note}
+Before using the date manipulation function from the lubridate package into the column that is looking like `date`, you first want to see if the column is of type `date`. CSV, TSV and excel files that we are dealing with can't store the datatypes as well within the file (or in more technical sense it can't hold the schema with the file). Hence you want to first make that column as a date column, by specifying the correct format. Here it id of the format `dd-mm-yyyy`, so we can use the `dmy()` function in the lubridate package. 
+:::
+
+```{r}
+time_df |> mutate(date_col = ymd(date_col)) |> filter(wday(date_col, abbr = FALSE, label = TRUE) == 'Monday')
+```
+
+>***Exercise:*** If you want to make sense on what happened before when we didn't use `ymd()` function, you can run the below codes, to see what happened. 
+
+Following is unexpected behaviour:
+
+```{r}
+print(time_df$date_col)
+typeof(time_df$date_col)
+year(time_df$date_col)
+month(time_df$date_col)
+day(time_df$date_col)
+```
+
+Following is the expected behaviour:
+
+```{r}
+print(time_df$date_col)
+typeof(dmy(time_df$date_col))
+print(dmy(time_df$date_col))
+year(dmy(time_df$date_col))
+month(dmy(time_df$date_col))
+day(dmy(time_df$date_col))
+```
+
+Now let's move on and try filtering the `date_col` based on an interval. For eg, what can we do if we want to filter out the data within a certain interval?
+
+The first step is to define the interval that we want to filter on. Here, we use the `interval()` from the lubridate package.
+
+```{r}
+start_date <- ymd("2020-01-15")
+end_date <- ymd("2020-01-15")
+my_interval <- interval(start_date, end_date)
+```
+
+After defining the interval, we can now filter the data using `filter()` and `%within%` function.
+
+```{r}
+time_df |> mutate(date_col = dmy(date_col)) |> filter(date_col %within% my_interval)
+```

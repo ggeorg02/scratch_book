@@ -44,25 +44,24 @@ If you downloaded this page as qmd you will see that the above code block can be
 
 You can use R code in qmd by specifying the language in the code block. But inorder to run the code cell and see the output, you need to set this up. Here are the steps that I did to setup R in qmd in VS Code:
 
-1) I did set it up using conda environment. As I don't want to mess up with my global R and base python installation. Here is the command I used `conda create --name rvscode -c conda-forge python=3.11 `
+1) I did set it up using conda environment. As I don't want to mess up with my global R and base python installation. Here is the command I used `conda create -n rvscodeR r-essentials r-base`
 
 2) Here are the packages that I installed in the conda environment:
-    - r-base
-    - radian
+    - `conda install radian`
     - nbformat
 
-3) Here is my r path  `/Users/ggeorg02/opt/miniconda3/envs/rvscode/bin/R` and the radian path `/Users/ggeorg02/opt/miniconda3/envs/rvscode/bin/radian`
+3) Here is my r path  `/Users/ggeorg02/opt/miniconda3/envs/rvscodeR/bin/R` and the radian path `/Users/ggeorg02/opt/miniconda3/envs/rvscodeR/bin/radian`
 
 4) Update the `settings.json` file in VS Code with the following settings:
 
 ```json
         "r.bracketedPaste": true,
-        "r.rpath.mac": "/Users/ggeorg02/opt/miniconda3/envs/rvscode/bin/R",
-        "r.rterm.mac": "/Users/ggeorg02/opt/miniconda3/envs/rvscode/bin/radian",
+        "r.rpath.mac": "/Users/ggeorg02/opt/miniconda3/envs/rvscodeR/bin/R",
+        "r.rterm.mac": "/Users/ggeorg02/opt/miniconda3/envs/rvscodeR/bin/radian",
         "r.rterm.option": [
             "--no-save",
             "--no-restore",
-            "--r-binary=/Users/ggeorg02/opt/miniconda3/envs/rvscode/bin/R"]
+            "--r-binary=/Users/ggeorg02/opt/miniconda3/envs/rvscodeR/bin/R"]
 ```
 
 > Note: You can do this by the shortcut CMD + Shift + P and then type `Preferences: Open Settings (JSON)`
@@ -86,9 +85,6 @@ I also installed additional R packages to enable rendering during the preview. I
  
 
 ```r
-install.packages("jsonlite")
-install.packages("knitr")
-install.packages("rmarkdown")
 install.packages("reticulate")
 ```
 
@@ -98,7 +94,5 @@ Here are few resources that I found helpful:
 [https://jimgar.github.io/posts/vs-code-macos-r/post.html](https://jimgar.github.io/posts/vs-code-macos-r/post.html)
 
 [https://github.com/randy3k/radian](https:://github.com/randy3k/radian)
-
-
 :::
 

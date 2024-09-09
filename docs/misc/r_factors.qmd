@@ -1,0 +1,109 @@
+---
+title: Working with factors in R
+editor: { render-on-save: true }
+---
+
+# Scope
+
+In this article, we will cover about factors and use of forcats package.
+
+We won’t get into the depths of where factors can be useful. However, they are mostly useful when you have a categorical variable in your data and want to use it in your visualizations or statistical model packages.
+
+# Introduction 
+
+Why do we want to learn how to work with factors in R?
+
+- Mainly because you often need to work with categorical variables in R. Many functions in statistical and visualization packages in R require the input to be a factor.
+
+# Getting started
+
+Let's start by creating a factor vector named `foo`. 
+
+```{r}
+foo <- factor(c("green", "green", "red", "red", "yellow", "yellow", "red", "red","yellow"))
+foo
+```
+
+Let's explore the factor vector that we just created. 
+
+```{r}
+table(foo)
+```
+
+The `table` function will give you the frequency of each level in the factor variable. 
+
+Let's count number of levels in the factor variable. 
+
+```{r}
+nlevels(foo)
+```
+
+Let's see what are the levels in the factor variable.
+
+```{r}
+levels(foo)
+```
+
+If you notice from the output of the `levels` function, the levels are ordered alphabetically( this is the default behaviour). 
+
+Let's reorder the levels in the factor variable.
+
+```{r}
+foo <- factor(foo, levels = c("yellow", "green", "red"))
+levels(foo)
+```
+
+Here levels are ordered in the order that we specified. 
+
+We can also use the `fct_relevel` function from the `forcats` package to reorder the levels based on the frequency of the levels. 
+
+```{r}
+library(forcats)
+```
+
+```{r}
+foo <- fct_relevel(foo, c("yellow","red"))
+levels(foo)
+```
+
+We can also change the level order based on the frequency of the levels. 
+
+Below the levels are ordered based on the frequency of the levels, with the most frequent level first ie "red", then "yellow" and then "green".
+
+```{r}
+foo <- fct_infreq(foo)
+levels(foo)
+```
+
+If we want to order it based on the frequency in the reverse order, we can do that too. 
+
+```{r}
+foo <- fct_rev(foo)
+levels(foo)
+```
+
+# Word of caution
+
+You need to be careful when working with factors in R. Even though a factor may look like a character vector, it is not one. Many functions that expect the input to be a character vector will throw an error if given a factor instead. Here is an example...
+
+```{r}
+# nchar(foo)
+```
+
+The above code will throw an error. Because the `nchar()` expects the input to be a character vector. Let's try it after coercing the factor to a character vector. 
+
+```{r}
+nchar(as.character(foo))
+```
+
+The `stringr` package functions will by default coerce the factor to a character vector and work on it. And returns the output as a character vector. But it is always better to convert the factor to a character vector before passing it to a function that expects a character vector. That way you know what you are doing, and no surprises when you are using the wrangled data in your vizualizations or statistical models. 
+
+Here is a quick demo of how `stringr` functions work with factors.
+
+```{r}
+library(stringr)
+foo_after_stringr <- str_replace(foo, "yellow", "blue")
+foo_after_stringr
+typeof(foo_after_stringr)
+```
+As you can see `foo_after_stringr` is a character vector.
