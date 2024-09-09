@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>quarto_exp - Setting up website using Quarto</title>
+<title>Scratch Book - Setting up website using Quarto</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">quarto_exp</span>
+    <span class="navbar-title">Scratch Book</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -144,11 +144,6 @@ ul.task-list li input[type="checkbox"] {
   <a href="../../docs/misc/r_factors.html" class="sidebar-item-text sidebar-link">Working with factors in R</a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../docs/misc/r_factors.html" class="sidebar-item-text sidebar-link">Working with factors in R</a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -189,7 +184,35 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="img/quartoskeleton.png" class="img-fluid"></p>
 <p>After this, you can render the website to see if it is working. I used the command line for this. I navigated to the folder where my project is located and ran quarto preview.</p>
 <p><img src="img/quartopreview.png" class="img-fluid"></p>
-<p>I can also render it to create the HTML for the website.</p>
+<p>I can also render it to create the HTML for the website. <code>quarto render</code>.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you get an error like below, then make sure you install reticulate correctly. Or point to the R that you installed. Here is what i did in my case:</p>
+<blockquote class="blockquote">
+<p>export QUARTO_R=/Users/ggeorg02/opt/miniconda3/envs/rvscodeR/bin/R</p>
+</blockquote>
+<pre><code>Error in `loadNamespace()`:
+! there is no package called 'reticulate'
+Backtrace:
+  1. global .main()
+ 14. base::loadNamespace(x)
+ 15. base::withRestarts(stop(cond), retry_loadNamespace = function() NULL)
+ 16. base (local) withOneRestart(expr, restarts[[1L]])
+ 17. base (local) doWithOneRestart(return(expr), restart)
+Warning message:
+The 'python' engine in knitr requires the reticulate package. If you do not want to use the reticulate package, set the chunk option python.reticulate = FALSE. 
+
+Quitting from lines 36-39 [unnamed-chunk-1] (useqmd_vscode.qmd)</code></pre>
+</div>
+</div>
 <p><img src="img/quartorender.png" class="img-fluid"></p>
 <p>Woohoo! It looks quite neat.</p>
 <p><img src="img/quartoafterrender.png" class="img-fluid"></p>

@@ -27,7 +27,30 @@ After this, you can render the website to see if it is working. I used the comma
 
 ![](img/quartopreview.png)
 
-I can also render it to create the HTML for the website.
+I can also render it to create the HTML for the website. `quarto render`.
+
+::: {.callout-warning}
+If you get an error like below, then make sure you install reticulate correctly. Or point to the R that you installed. Here is what i did in my case:
+
+>export QUARTO_R=/Users/ggeorg02/opt/miniconda3/envs/rvscodeR/bin/R
+
+Here is some more info: [https://github.com/quarto-dev/quarto-cli/issues/6162](https://github.com/quarto-dev/quarto-cli/issues/6162)
+```
+Error in `loadNamespace()`:
+! there is no package called 'reticulate'
+Backtrace:
+  1. global .main()
+ 14. base::loadNamespace(x)
+ 15. base::withRestarts(stop(cond), retry_loadNamespace = function() NULL)
+ 16. base (local) withOneRestart(expr, restarts[[1L]])
+ 17. base (local) doWithOneRestart(return(expr), restart)
+Warning message:
+The 'python' engine in knitr requires the reticulate package. If you do not want to use the reticulate package, set the chunk option python.reticulate = FALSE. 
+
+Quitting from lines 36-39 [unnamed-chunk-1] (useqmd_vscode.qmd)
+```
+:::
+
 
 ![](img/quartorender.png)
 

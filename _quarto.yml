@@ -3,7 +3,7 @@ project:
   output-dir: _site
 
 website:
-  title: "quarto_exp"
+  title: "Scratch Book"
   navbar:
     left:
       - href: index.qmd
@@ -68,8 +68,6 @@ website:
               href: docs/misc/r_lubridate.qmd              
             - text: "Working with factors in R"
               href: docs/misc/r_factors.qmd
-            - text: "Working with factors in R"
-              href: docs/misc/r_factors.qmd   
 
 
 format:
